@@ -18,6 +18,7 @@ public class PostServiceImplementation implements PostService {
 	@Override
 	public Post createPost(Post post) throws UserException {
 		// TODO Auto-generated method stub
+		System.out.println("Hello");
 		return null;
 	}
 
