@@ -11,6 +11,8 @@ import com.insta.instagram.dto.UserDto;
 import com.insta.instagram.exceptions.UserException;
 import com.insta.instagram.model.User;
 import com.insta.instagram.repository.UserRepository;
+import com.insta.instagram.security.JwtTokenClaims;
+import com.insta.instagram.security.JwtTokenProvider;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -19,6 +21,9 @@ public class UserServiceImplementation implements UserService {
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 	@Override
 	public User registerUser(User user) throws UserException {
 		// TODO Auto-generated method stub
@@ -66,8 +71,15 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public User findUserProfile(String token) throws UserException {
 		// TODO Auto-generated method stub
-		 
-		return null;
+		 token = token.substring(7);
+		 JwtTokenClaims jwtTokenClaims = jwtTokenProvider.getClaimsFromToken(token);
+		 String email = jwtTokenClaims.getUsername();
+		 Optional<User> opt = userRepository.findByEmail(email);
+		 if(opt.isPresent())
+		 {
+			 return opt.get();
+		 }
+		throw new UserException("invalid token");
 	}
 
 	@Override
@@ -95,7 +107,7 @@ public class UserServiceImplementation implements UserService {
 		following.setId(follower.getId());
 		following.setName(follower.getName());
 		following.setUserImage(follower.getUserImage());
-		following.setUsername(follower.getEmail());
+		following.setUsername(follower.getUsername());
 		reqUser.getFollowing().add(following);
 		followUser.getFollower().add(follower);
 		userRepository.save(followUser);
