@@ -20,6 +20,9 @@ import jakarta.persistence.Id;
 public class Comment {
 
 
+	public Comment() {
+		super();
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

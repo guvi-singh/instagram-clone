@@ -86,8 +86,14 @@ public class UserServiceImplementation implements UserService {
 	public User findUserByUsername(String username) throws UserException {
 		// TODO Auto-generated method stub
 	
+		Optional<User> opt = userRepository.findByUsername(username);
+		if(opt.isPresent())
+		{
+			return opt.get();
+		}
+		throw new UserException("User not exist with id: "+username);
 		
-		return null;
+		
 	}
 
 	@Override

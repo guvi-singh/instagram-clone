@@ -53,7 +53,7 @@ public class PostControllor {
 		
 		
 	}
-	@GetMapping("/following/{id}")
+	@GetMapping("/following/{ids}")
 	public ResponseEntity<List<Post>> findAllPostByUserIds(@PathVariable("ids") List<Integer> userIds) throws UserException, PostException
 	{
 		List<Post> posts = postService.findAllPostByUserIds(userIds);
