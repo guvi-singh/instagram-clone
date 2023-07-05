@@ -26,6 +26,21 @@ import jakarta.persistence.Table;
 @Table(name="Post")
 public class Post {
 
+	public Post() {
+		super();
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
 
 	public Integer getId() {
 		return id;
@@ -75,10 +90,13 @@ public class Post {
 		this.likedByUsers = likedByUsers;
 	}
 
-	public Post(Integer id, String location, LocalDateTime createdAt, UserDto user, List<Comment> comments,
-			Set<UserDto> likedByUsers) {
+
+	public Post(Integer id, String caption, String image, String location, LocalDateTime createdAt, UserDto user,
+			List<Comment> comments, Set<UserDto> likedByUsers) {
 		super();
 		this.id = id;
+		this.caption = caption;
+		this.image = image;
 		this.location = location;
 		this.createdAt = createdAt;
 		this.user = user;
@@ -86,9 +104,16 @@ public class Post {
 		this.likedByUsers = likedByUsers;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	private String caption;
+	private String image;
 	private String location;
 	private LocalDateTime createdAt;
 	
